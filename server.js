@@ -1,19 +1,12 @@
 const express = require('express');
 const {validateRegistrationMW} = require('./middlewares/user.mw')
-
-
-const users = [{ id: 1 }, { id: 2 }];
+const { getUsers, createUser } = require('./controllers/userContraller')
 
 // екземпляр експресівського серверу
 const app = express();
 
 // app містить функції які відповідають всім методам HTTP запиту
-// app.get('/users', (req, res) => {
-// 	console.log('users requested');
-
-// 	// res.end(JSON.stringify(users));
-// 	res.send(users);
-// });
+app.get('/users', getUsers);
 
 // app.get('*', (req, res) => {
 // 	console.log('users requested');
@@ -49,16 +42,7 @@ app.get(
 // мідлвер для обробки JSON у запитах
 const bodyParserMiddleware = express.json()
 
-app.post('/users', bodyParserMiddleware, validateRegistrationMW, (req, res, next) => {
-  const newUser = req.user;
-
-  newUser.id = users.length;
-  newUser.createdAt = new Date();
-
-  users.push(newUser);
-
-  res.send(newUser);
-});
+app.post('/users', bodyParserMiddleware, validateRegistrationMW, createUser);
 
 /*
   1. Отримати дані користувача з запиту
