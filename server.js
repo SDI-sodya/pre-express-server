@@ -1,4 +1,5 @@
 const express = require('express');
+const yup = require('yup');
 
 const users = [{ id: 1 }, { id: 2 }];
 
@@ -43,6 +44,41 @@ app.get(
 		res.send('all done');
 	}
 );
+
+// мідлвер для обробки JSON у запитах
+const bodyParserMiddleware = express.json()
+
+const REGISTRATION_SCHEMA = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().min(8).max(16).required(),
+  gender: yup.string()
+});
+
+app.post('/users', bodyParserMiddleware, (req, res, next) => {
+  REGISTRATION_SCHEMA.validate(req.body).then((validatedUser) => {
+    req.user = validatedUser;
+    next()
+  }).catch(err => {
+    res.send(err.message) // типо вернул ошибку. Не делать так лучше
+  })
+}, (req, res, next) => {
+  const newUser = req.user;
+
+  newUser.id = users.length;
+  newUser.createdAt = new Date();
+
+  users.push(newUser);
+
+  res.send(newUser);
+});
+
+/*
+  1. Отримати дані користувача з запиту
+  2. Перевірити дані
+  3. Зберегти дані (потім у БД)
+  4. Створити сесію для користувача (логін або перехід в акаунт)
+  5. Відправити дані на клієнт
+*/
 
 const PORT = 3000;
 const HOST = 'locahost';
