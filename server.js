@@ -1,5 +1,5 @@
 const express = require('express');
-const {validateRegistrationMW} = require('./middlewares/usermw')
+const {validateRegistrationMW} = require('./middlewares/user.mw')
 
 
 const users = [{ id: 1 }, { id: 2 }];
