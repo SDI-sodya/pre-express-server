@@ -1,5 +1,6 @@
 const express = require('express');
-const REGISTRATION_SCHEMA = require('./validation/userChemas')
+const {validateRegistrationMW} = require('./middlewares/usermw')
+
 
 const users = [{ id: 1 }, { id: 2 }];
 
@@ -48,14 +49,7 @@ app.get(
 // мідлвер для обробки JSON у запитах
 const bodyParserMiddleware = express.json()
 
-app.post('/users', bodyParserMiddleware, (req, res, next) => {
-  REGISTRATION_SCHEMA.validate(req.body).then((validatedUser) => {
-    req.user = validatedUser;
-    next()
-  }).catch(err => {
-    res.send(err.message) // типо вернул ошибку. Не делать так лучше
-  })
-}, (req, res, next) => {
+app.post('/users', bodyParserMiddleware, validateRegistrationMW, (req, res, next) => {
   const newUser = req.user;
 
   newUser.id = users.length;
