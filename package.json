@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/SDI-sodya/pre-express-server/issues"
   },
-  "homepage": "https://github.com/SDI-sodya/pre-express-server#readme"
+  "homepage": "https://github.com/SDI-sodya/pre-express-server#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
