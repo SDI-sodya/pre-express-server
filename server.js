@@ -48,8 +48,6 @@ app.get(
 // мідлвер для обробки JSON у запитах
 const bodyParserMiddleware = express.json()
 
-
-
 app.post('/users', bodyParserMiddleware, (req, res, next) => {
   REGISTRATION_SCHEMA.validate(req.body).then((validatedUser) => {
     req.user = validatedUser;
