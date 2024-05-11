@@ -15,26 +15,6 @@ app.get('/users', (req, res) => {
 	res.send(JSON.stringify(users));
 });
 
-app.get(
-	'/test',
-	(req, res, next) => {
-		console.log('first callback');
-
-		req.abracadabra = 'magic trick';
-
-		next();
-	},
-	(req, res, next) => {
-		console.log('second callback');
-		console.log(req.abracadabra);
-		next();
-	},
-	(req, res) => {
-		console.log('third callback');
-		res.send('all done');
-	}
-);
-
 /*
   1. отримати дані користувача с запиту
   2. перевірити дані
