@@ -1,4 +1,4 @@
-let users = [];
+let users = [{ id: 0, email: 'test@test.test', password: '2134asdfa' }];
 
 class User {
 	static async create(userData) {
@@ -10,32 +10,35 @@ class User {
 
 		return newUser;
 	}
+
 	static async findAll() {
 		return users;
 	}
-	static async findOne(id) {
-		const user = users.find((user) => users.id === id);
 
+	static async findOne(id) {
+		const user = users.find((user) => user.id === id);
 		return user;
 	}
+
 	static async update(id, newUserData) {
-    users.map(user => {
-      if(user.id !== id){
-        return user;
-      }
+		users = users.map((user) => {
+			if (user.id !== id) {
+				return user;
+			}
 
-      const updatedUser = {...user, ...newUserData};
-      return updatedUser;
-    });
+			const updatedUser = { ...user, ...newUserData };
+			return updatedUser;
+		});
 
-    const updatedUser = await User.findOne(id);
-    return updatedUser;
-  }
+		const updatedUser = await User.findOne(id);
+		return updatedUser;
+	}
+
 	static async delete(id) {
-    const deletedUser = await User.findOne(id);
+		const deletedUser = await User.findOne(id);
 
 		users = users.filter((user) => user.id !== id);
-    return deletedUser;
+		return deletedUser;
 	}
 }
 
