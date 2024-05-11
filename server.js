@@ -1,5 +1,5 @@
 const express = require('express');
-const yup = require('yup');
+const REGISTRATION_SCHEMA = require('./validations/userSchemas');
 
 const users = [{ id: 1 }, { id: 2 }];
 
@@ -44,12 +44,6 @@ app.get(
 */
 
 const bodyParserMiddleware = express.json();
-
-const REGISTRATION_SCHEMA = yup.object({
-	email: yup.string().email().required(),
-	password: yup.string().min(8).max(16).required(),
-	gender: yup.string(),
-});
 
 app.post('/users', bodyParserMiddleware, (req, res, next) => {
 	REGISTRATION_SCHEMA.validate(req.body).then((validateUser) => {
