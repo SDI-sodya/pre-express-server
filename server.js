@@ -1,5 +1,6 @@
 const express = require('express');
 const router = require('./routers');
+const { handleBasicErrorMW, handleEpicErrorMW } = require('./errors');
 
 // екземпляр експресівського серверу
 const app = express();
@@ -10,6 +11,9 @@ const app = express();
 app.use(express.json());
 
 app.use(router);
+
+app.use(handleBasicErrorMW);
+app.use(handleEpicErrorMW);
 
 const PORT = 3000;
 const HOST = 'localhost';
