@@ -1,20 +1,10 @@
 const express = require('express');
-const { validateRegistrationMW } = require('../middlewares/user.mw');
-const {
-	getUsers,
-	createUser,
-	findUser,
-	deleteUser,
-	updateUser,
-} = require('../controllers/userContraller');
+const userRouter = require('./userRouter');
 
 const router = express.Router();
 
 // роутер експрессу, містить тіж самі методи маршрутизації що і app
-router.get('/users', getUsers);
-router.get('/users/:userId', findUser);
-router.delete('/users/:userId', deleteUser);
-router.put('/users/:userId', updateUser);
-router.post('/users', validateRegistrationMW, createUser);
+
+router.use('/users', userRouter);
 
 module.exports = router;
