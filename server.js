@@ -53,12 +53,18 @@ const REGISTRATION_SCHEMA = yup.object({
 
 app.post('/users', bodyParserMiddleware, (req, res, next) => {
 	REGISTRATION_SCHEMA.validate(req.body).then((validateUser) => {
-		res.send(validateUser) 
-	}).catch(err => {
-		res.send(err.message);
-	})
-	console.log(req.body);
-  res.send(req.body);
+		req.user = validateUser;
+		next();
+	}).catch(err => {res.send(err.message);});
+}, (req, res, next) => {
+	const newUser = req.user;
+
+	newUser.id = users.length;
+	newUser.createdAt = new Date();
+
+	users.push(newUser);
+
+	res.send(newUser);
 });
 
 app.get('*', () => {
