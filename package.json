@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/SDI-sodya/pre-express-server#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "yup": "^1.4.0"
   }
 }
