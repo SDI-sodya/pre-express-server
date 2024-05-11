@@ -7,6 +7,8 @@ const app = express();
 // app містить функції які відповідають всім методам HTTP запиту
 
 // MW router змонтовано в app
+app.use(express.json());
+
 app.use(router);
 
 const PORT = 3000;
